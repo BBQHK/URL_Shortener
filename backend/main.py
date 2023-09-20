@@ -3,6 +3,7 @@ from typing import Union
 from fastapi import Depends, FastAPI
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 
 import crud
 from database import SessionLocal, engine
@@ -10,6 +11,15 @@ from database import SessionLocal, engine
 from pydantic import BaseModel
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Dependency
 def get_db():

@@ -1,22 +1,6 @@
 from sqlalchemy.orm import Session
 import models
-
-import random
-import string
-
-import urllib.parse
-
-def is_valid_url(url):
-    try:
-        result = urllib.parse.urlparse(url)
-        return all([result.scheme, result.netloc])
-    except ValueError:
-        return False
-
-def generate_random_string():
-    characters = string.digits + string.ascii_letters
-    random_string = ''.join(random.choice(characters) for _ in range(6))
-    return random_string
+from util import is_valid_url, generate_random_string
 
 def is_shorten_url_exists(db: Session, shorten_url: str):
     existing_mapping = db.query(models.URL_MAP).filter(models.URL_MAP.shorten_url == shorten_url).first()
