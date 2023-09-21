@@ -37,7 +37,7 @@ class Convert_OriginalURL_Request_Body(BaseModel):
 def get_original_url(shorten_url: str, request: Request, db: Session = Depends(get_db)):
     client_ip = request.client.host # Retrieve the client's IP address
     result = crud.get_original_url(db, shorten_url=shorten_url)
-    
+
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     crud.create_access_record(db, shorten_url=shorten_url, ip_addr=client_ip, access_time=current_time)
 
@@ -50,8 +50,9 @@ def get_original_url(shorten_url: str, request: Request, db: Session = Depends(g
 async def gen_shorten_url(request_body: Convert_OriginalURL_Request_Body, db: Session = Depends(get_db)):
     if not is_valid_url(request_body.original_url):
         raise HTTPException(status_code=500, detail="Invalid URL")
-
-    return crud.create_shorten_url_mapping(db, original_url=request_body.original_url)
+    
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return crud.create_shorten_url_mapping(db, original_url=request_body.original_url, created_date=current_time)
 
 @app.get("/log/{shorten_url}", description="Get the access log of the corresponding shortened URL")
 def get_access_record(shorten_url: str, db: Session = Depends(get_db)):
