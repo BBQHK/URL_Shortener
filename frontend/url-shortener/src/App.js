@@ -7,6 +7,9 @@ import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { getShortenedURL } from './services/URLService';
+// import ButtonAppBar from './components/AppBar';
+// import { height } from '@mui/system';
 
 function App() {
   const { enqueueSnackbar } = useSnackbar();
@@ -17,17 +20,7 @@ function App() {
 
   const handleUrlShorten = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/s/', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "original_url": originalUrl
-        })
-      });
-  
+      const response = await getShortenedURL(originalUrl);
       if (response.ok) {
         const data = await response.json();
 
@@ -35,12 +28,10 @@ function App() {
         setErrorMsg(null);
       } else {
         // Handle error response
-        console.error('Error:', response.status);
         const error = await response.json();
-        console.error(error.detail);
 
-        setErrorMsg(error.detail);
         setShortenedUrl(null);
+        setErrorMsg(error.detail);
       }
     } catch (error) {
       // Handle fetch error
@@ -57,7 +48,6 @@ function App() {
       .then(() => {
         enqueueSnackbar('URL copied to clipboard', { variant: 'success' });
         console.log('URL copied to clipboard:', shortenedUrl);
-        // enqueueSnackbar('URL copied to clipboard');
         // Optionally, you can show a success message or perform any other action
       })
       .catch((error) => {
@@ -73,7 +63,8 @@ function App() {
   )
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <ButtonAppBar /> */}
+      {/* <header className="App-header"> */}
         <img src={logo} className="App-logo" alt="logo" />
         <h1>URL Shortener</h1>
 
@@ -102,7 +93,7 @@ function App() {
             <TextField value={shortenedUrl} variant="standard" sx={{width: "500px"}} InputProps={{readOnly: true, endAdornment: <CopyButton />}}/>
           </div>
         )}
-      </header>
+      {/* </header> */}
     </div>
   );
 }
