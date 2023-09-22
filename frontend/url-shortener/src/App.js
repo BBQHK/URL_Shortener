@@ -1,3 +1,4 @@
+import logo from './logo.svg';
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,6 +19,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link as LinkRouter, Outlet, useLoaderData, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Switch from '@mui/material/Switch';
 import { createTheme, ThemeProvider } from '@mui/material';
 
@@ -120,6 +122,9 @@ export default function PersistentDrawerLeft() {
             >
               <MenuIcon />
             </IconButton>
+            <Link to="/">
+              <img src={logo} className="App-logo" alt="logo" style={{ height: '60px', width: '60px' }}/>
+            </Link>
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
               Toys Box
             </Typography>
