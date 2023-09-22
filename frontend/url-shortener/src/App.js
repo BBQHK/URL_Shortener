@@ -156,7 +156,7 @@ export default function PersistentDrawerLeft() {
           <Divider />
           <List>
             <ListItem disablePadding>
-              <ListItemButton component={LinkRouter} to='/url_shortener'>
+              <ListItemButton component={LinkRouter} to='/'>
                 <ListItemIcon>
                   <LinkIcon/>
                 </ListItemIcon>

@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/url_shortener",
+        path: "/",
         element: <URLShortener />,
       },
       {
