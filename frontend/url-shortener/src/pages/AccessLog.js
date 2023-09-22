@@ -56,7 +56,7 @@ function AccessLog() {
                     pageSizeOptions={[5, 10]}
                     />
                 ) : (
-                    <div><span style={{ color : 'blue' }}>Please input a tracking code to get the access record.</span></div>
+                    <div>Please input a tracking code to get the access record.</div>
                 )}
             </div>
         </div>

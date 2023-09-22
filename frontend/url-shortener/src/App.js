@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -17,9 +18,12 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link as LinkRouter, Outlet, useLoaderData, useLocation } from 'react-router-dom';
+import Switch from '@mui/material/Switch';
+import { createTheme, ThemeProvider } from '@mui/material';
 
 import LinkIcon from '@mui/icons-material/Link';
 import TrackChangesIcon from '@mui/icons-material/TrackChanges';
+
 
 const drawerWidth = 240;
 
@@ -71,6 +75,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [themeMode, setThemeMode] = React.useState('dark'); // 'dark' or 'light'
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -80,67 +85,99 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
+  const toggleThemeMode = () => {
+    const newThemeMode = themeMode === 'light' ? 'dark' : 'light';
+    setThemeMode(newThemeMode);
+  };
+
+  const themeOptions = {
+    light: createTheme({
+      palette: {
+        mode: 'light',
+      },
+    }),
+    dark: createTheme({
+      palette: {
+        mode: 'dark',
+      },
+    }),
+  };
+
+  const currentTheme = themeOptions[themeMode];
+
   return (
-    <Box sx={{ display: 'flex' }}>
+    <ThemeProvider theme={currentTheme}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            URL Shortener
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
+      <Box sx={{ display: 'flex' }}>
+        <AppBar position="fixed" open={open}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+              Toys Box
+            </Typography>
+            <FormControlLabel
+              control={
+                <Switch
+                  onChange={toggleThemeMode}
+                  color="default"
+                />
+              }
+              label={themeMode === 'light'? 'Light mode': 'Dark mode'}
+              labelPlacement="start"
+            />
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          sx={{
             width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton component={LinkRouter} to='/url_shortener'>
-              <ListItemIcon>
-                <LinkIcon/>
-              </ListItemIcon>
-              <ListItemText primary="URL Shortener" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component={LinkRouter} to='/log'>
-              <ListItemIcon>
-                <TrackChangesIcon/>
-              </ListItemIcon>
-              <ListItemText primary="IP Logger" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-        <Outlet />
-      </Main>
-    </Box>
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton component={LinkRouter} to='/url_shortener'>
+                <ListItemIcon>
+                  <LinkIcon/>
+                </ListItemIcon>
+                <ListItemText primary="URL Shortener" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component={LinkRouter} to='/log'>
+                <ListItemIcon>
+                  <TrackChangesIcon/>
+                </ListItemIcon>
+                <ListItemText primary="IP Logger" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Drawer>
+        <Main open={open}>
+          <DrawerHeader />
+          <Outlet />
+        </Main>
+      </Box>
+    </ThemeProvider>
   );
 }

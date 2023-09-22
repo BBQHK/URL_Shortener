@@ -64,36 +64,34 @@ function URLShortener() {
   return (
     <div className="URLShortener">
       {/* <ButtonAppBar /> */}
-      {/* <header className="App-header"> */}
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>URL Shortener</h1>
+      <img src={logo} className="App-logo" alt="logo" />
+      <h1>URL Shortener</h1>
 
-        <div className="Shorten-section">
-          <TextField
-            label="Original URL"
-            variant="outlined"
-            value={originalUrl}
-            onChange={handleOriginalUrlChange}
-            sx={{width: '300px'}}
-          />
-          <Button variant="contained" onClick={handleUrlShorten} sx={{margin: '10px'}}>
-            Generate Shortened URL
-          </Button>
+      <div className="Shorten-section">
+        <TextField
+          label="Original URL"
+          variant="outlined"
+          value={originalUrl}
+          onChange={handleOriginalUrlChange}
+          sx={{width: '300px'}}
+        />
+        <Button variant="contained" onClick={handleUrlShorten} sx={{margin: '10px'}}>
+          Generate Shortened URL
+        </Button>
+      </div>
+
+      {errorMsg && (
+        <div className='Alert-section'>
+          <Alert severity="error" sx={{width: '550px', margin: '0 auto', marginTop: '10px'}}>{errorMsg}</Alert>
         </div>
+      )}
 
-        {errorMsg && (
-          <div className='Alert-section'>
-            <Alert severity="error" sx={{marginTop: '10px'}}>{errorMsg}</Alert>
-          </div>
-        )}
-
-        {shortenedUrl && (
-          <div className="Result-section">
-            <p>Your shortened URL:</p>
-            <TextField value={shortenedUrl} variant="standard" sx={{width: "500px"}} InputProps={{readOnly: true, endAdornment: <CopyButton />}}/>
-          </div>
-        )}
-      {/* </header> */}
+      {shortenedUrl && (
+        <div className="Result-section">
+          <p>Your shortened URL:</p>
+          <TextField value={shortenedUrl} variant="standard" sx={{width: "500px"}} InputProps={{readOnly: true, endAdornment: <CopyButton />}}/>
+        </div>
+      )}
     </div>
   );
 }
