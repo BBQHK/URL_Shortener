@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  node-frontend:
+    image: url-shortener-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - python-backend
+
+  python-backend:
+    image: url-shortener-backend
+    ports:
+      - "8000:8000"
