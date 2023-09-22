@@ -38,11 +38,11 @@ def get_original_url(shorten_url: str, request: Request, db: Session = Depends(g
     client_ip = request.client.host # Retrieve the client's IP address
     result = crud.get_original_url(db, shorten_url=shorten_url)
 
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    crud.create_access_record(db, shorten_url=shorten_url, ip_addr=client_ip, access_time=current_time)
-
     if result == None:
         raise HTTPException(status_code=404, detail="Shortened URL not Found")
+    
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    crud.create_access_record(db, shorten_url=shorten_url, ip_addr=client_ip, access_time=current_time)
     
     return RedirectResponse(url=result.original_url)
 

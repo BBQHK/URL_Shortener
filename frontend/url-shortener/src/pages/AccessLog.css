@@ -4,5 +4,6 @@
 
 .DataGridContainer {
     width: 700px; /* Set a width for the container */
+    height: 500px;
     margin: 0 auto; /* Center the container horizontally */
 }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import AccessLog from './pages/AccessLog'
+import URLShortener from './pages/URLShortener';
 import reportWebVitals from './reportWebVitals';
 import { SnackbarProvider } from 'notistack';
 
@@ -15,10 +16,16 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-  {
-    path: "/log",
-    element: <AccessLog />,
+    children: [
+      {
+        path: "/url_shortener",
+        element: <URLShortener />,
+      },
+      {
+        path: "/log",
+        element: <AccessLog />,
+      }
+    ]
   }
 ]);
 

@@ -1,101 +1,146 @@
-import logo from './logo.svg';
-import { useState } from 'react';
-import './App.css';
-import { useSnackbar } from 'notistack';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Alert from '@mui/material/Alert';
+import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { getShortenedURL } from './services/URLService';
-// import ButtonAppBar from './components/AppBar';
-// import { height } from '@mui/system';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import { Link as LinkRouter, Outlet, useLoaderData, useLocation } from 'react-router-dom';
 
-function App() {
-  const { enqueueSnackbar } = useSnackbar();
-  const [originalUrl, setOriginalUrl] = useState('');
-  const [shortenedUrl, setShortenedUrl] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
-  const backendServerAddress = "http://10.109.9.212:8000/";
+import LinkIcon from '@mui/icons-material/Link';
+import TrackChangesIcon from '@mui/icons-material/TrackChanges';
 
-  const handleUrlShorten = async () => {
-    try {
-      const response = await getShortenedURL(originalUrl);
-      if (response.ok) {
-        const data = await response.json();
+const drawerWidth = 240;
 
-        setShortenedUrl(backendServerAddress + data.shorten_url);
-        setErrorMsg(null);
-      } else {
-        // Handle error response
-        const error = await response.json();
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  }),
+);
 
-        setShortenedUrl(null);
-        setErrorMsg(error.detail);
-      }
-    } catch (error) {
-      // Handle fetch error
-      console.error('Error:', error);
-    }
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
+
+export default function PersistentDrawerLeft() {
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
   };
 
-  const handleOriginalUrlChange = (event) => {
-    setOriginalUrl(event.target.value);
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
 
-  const handleCopyButtonClick = () => {
-    navigator.clipboard.writeText(shortenedUrl)
-      .then(() => {
-        enqueueSnackbar('URL copied to clipboard', { variant: 'success' });
-        console.log('URL copied to clipboard:', shortenedUrl);
-        // Optionally, you can show a success message or perform any other action
-      })
-      .catch((error) => {
-        console.error('Error copying URL to clipboard:', error);
-        // Optionally, you can show an error message or perform any other action
-      });
-  };
-
-  const CopyButton = () => (
-    <IconButton aria-label="copy" onClick={handleCopyButtonClick}>
-      <ContentCopyIcon />
-    </IconButton>
-  )
   return (
-    <div className="App">
-      {/* <ButtonAppBar /> */}
-      {/* <header className="App-header"> */}
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>URL Shortener</h1>
-
-        <div className="Shorten-section">
-          <TextField
-            label="Original URL"
-            variant="outlined"
-            value={originalUrl}
-            onChange={handleOriginalUrlChange}
-            sx={{width: '300px'}}
-          />
-          <Button variant="contained" onClick={handleUrlShorten} sx={{margin: '10px'}}>
-            Generate Shortened URL
-          </Button>
-        </div>
-
-        {errorMsg && (
-          <div className='Alert-section'>
-            <Alert severity="error" sx={{marginTop: '10px'}}>{errorMsg}</Alert>
-          </div>
-        )}
-
-        {shortenedUrl && (
-          <div className="Result-section">
-            <p>Your shortened URL:</p>
-            <TextField value={shortenedUrl} variant="standard" sx={{width: "500px"}} InputProps={{readOnly: true, endAdornment: <CopyButton />}}/>
-          </div>
-        )}
-      {/* </header> */}
-    </div>
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            URL Shortener
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton component={LinkRouter} to='/url_shortener'>
+              <ListItemIcon>
+                <LinkIcon/>
+              </ListItemIcon>
+              <ListItemText primary="URL Shortener" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={LinkRouter} to='/log'>
+              <ListItemIcon>
+                <TrackChangesIcon/>
+              </ListItemIcon>
+              <ListItemText primary="IP Logger" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Drawer>
+      <Main open={open}>
+        <DrawerHeader />
+        <Outlet />
+      </Main>
+    </Box>
   );
 }
-
-export default App;
