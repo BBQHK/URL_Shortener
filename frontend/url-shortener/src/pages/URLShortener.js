@@ -16,7 +16,10 @@ function URLShortener() {
   const [originalUrl, setOriginalUrl] = useState('');
   const [shortenedUrl, setShortenedUrl] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const backendServerAddress = "http://10.109.9.212:8000/";
+  const API_URL = process.env.REACT_APP_API_URL;
+  const API_PORT = process.env.REACT_APP_API_PORT;
+
+  const backendServerAddress = `http://${API_URL}:${API_PORT}/`;
 
   const handleUrlShorten = async () => {
     try {
