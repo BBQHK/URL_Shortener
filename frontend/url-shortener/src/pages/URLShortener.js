@@ -8,6 +8,8 @@ import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { getShortenedURL } from '../services/URLService';
+import QRCode from "react-qr-code";
+import Grid from '@mui/material/Grid'; // Grid version 1
 // import ButtonAppBar from './components/AppBar';
 // import { height } from '@mui/system';
 
@@ -66,35 +68,53 @@ function URLShortener() {
   )
   return (
     <div className="URLShortener">
-      {/* <ButtonAppBar /> */}
-      <img src={logo} className="App-logo" alt="logo" />
-      <h1>URL Shortener</h1>
+      <Grid container spacing={2}>
+        <Grid item xs={4}></Grid>
+        <Grid item xs={4}>
+          {/* <ButtonAppBar /> */}
+          <img src={logo} style={{width:"100%"}} className="App-logo" alt="logo" />
+          <h1>URL Shortener</h1>
 
-      <div className="Shorten-section">
-        <TextField
-          label="Original URL"
-          variant="outlined"
-          value={originalUrl}
-          onChange={handleOriginalUrlChange}
-          sx={{width: '300px'}}
-        />
-        <Button variant="contained" onClick={handleUrlShorten} sx={{margin: '10px'}}>
-          Generate Shortened URL
-        </Button>
-      </div>
+          <div className="Shorten-section">
+            <TextField
+              label="Original URL"
+              variant="outlined"
+              value={originalUrl}
+              onChange={handleOriginalUrlChange}
+              sx={{width: '100%'}}
+            />
+            <Button variant="contained" onClick={handleUrlShorten} sx={{margin: '10px'}}>
+              Generate Shortened URL
+            </Button>
+          </div>
 
-      {errorMsg && (
-        <div className='Alert-section'>
-          <Alert severity="error" sx={{width: '550px', margin: '0 auto', marginTop: '10px'}}>{errorMsg}</Alert>
-        </div>
-      )}
+          {errorMsg && (
+            <div className='Alert-section'>
+              <Alert severity="error" sx={{width: '100%', margin: '0 auto', marginTop: '10px'}}>{errorMsg}</Alert>
+            </div>
+          )}
 
-      {shortenedUrl && (
-        <div className="Result-section">
-          <p>Your shortened URL:</p>
-          <TextField value={shortenedUrl} variant="standard" sx={{width: "500px"}} InputProps={{readOnly: true, endAdornment: <CopyButton />}}/>
-        </div>
-      )}
+          {shortenedUrl && (
+            <div className="Result-section">
+              <p>Your shortened URL:</p>
+              <TextField value={shortenedUrl} variant="standard" sx={{width: "100%"}} InputProps={{readOnly: true, endAdornment: <CopyButton />}}/>
+            </div>
+          )}
+        </Grid>
+        <Grid item xs={4}>
+          <p style={{ marginTop: "300px" }}>QR code of the shortened URL:</p>
+          {shortenedUrl && (
+            <div style={{ background: 'white', padding: '16px', margin:"auto", height: "auto", maxWidth: 300, width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+              <QRCode
+              size={256}
+              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+              value={shortenedUrl}
+              viewBox={`0 0 256 256`}
+              />
+            </div>
+          )}
+        </Grid>
+      </Grid>
     </div>
   );
 }
