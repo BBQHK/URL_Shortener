@@ -41,7 +41,6 @@ CREATE TABLE `access_log` (
 
 LOCK TABLES `access_log` WRITE;
 /*!40000 ALTER TABLE `access_log` DISABLE KEYS */;
-INSERT INTO `access_log` VALUES (1,'EtNsGv','127.0.0.1','2023-09-22 09:07:16'),(2,'n2t1Ry','10.109.9.212','2023-09-22 09:29:59'),(3,'EtNsGv','127.0.0.1','2023-09-22 10:38:55'),(4,'EtNsGv','127.0.0.1','2023-09-22 10:38:57'),(5,'EtNsGv','127.0.0.1','2023-09-22 10:38:59'),(6,'3VIHf4','10.109.9.212','2023-09-22 10:48:28'),(7,'wk8EK8','10.109.9.212','2023-09-22 14:12:52'),(8,'GHBvp4','127.0.0.1','2023-09-22 21:58:52'),(9,'WwtCiw','127.0.0.1','2023-09-22 22:28:52'),(10,'33QSdS','127.0.0.1','2023-09-25 09:03:45');
 /*!40000 ALTER TABLE `access_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +66,6 @@ CREATE TABLE `url_map` (
 
 LOCK TABLES `url_map` WRITE;
 /*!40000 ALTER TABLE `url_map` DISABLE KEYS */;
-INSERT INTO `url_map` VALUES (1,'9UfBUr','https://www.google.com/','2023-09-21 15:11:58'),(2,'NuqQsG','https://www.google.com/','2023-09-21 16:11:49'),(3,'bFZwGd','https://www.google.com/','2023-09-21 16:20:18'),(4,'EtNsGv','https://stackoverflow.com/questions/69567381/getting-cannot-read-property-pickalgorithm-of-null-error-in-react-native','2023-09-22 09:03:14'),(5,'n2t1Ry','https://www.google.com/','2023-09-22 09:29:55'),(6,'3VIHf4','https://www.google.com/','2023-09-22 10:48:24'),(7,'wk8EK8','https://www.google.com','2023-09-22 14:12:49'),(8,'GHBvp4','https://www.google.com/','2023-09-22 21:58:18'),(9,'WwtCiw','https://www.google.com/','2023-09-22 22:28:49'),(10,'33QSdS','https://www.google.com/','2023-09-25 09:03:42');
 /*!40000 ALTER TABLE `url_map` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
