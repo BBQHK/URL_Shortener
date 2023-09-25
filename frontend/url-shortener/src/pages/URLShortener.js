@@ -71,7 +71,6 @@ function URLShortener() {
       <Grid container spacing={2}>
         <Grid item xs={4}></Grid>
         <Grid item xs={4}>
-          {/* <ButtonAppBar /> */}
           <img src={logo} style={{width:"100%"}} className="App-logo" alt="logo" />
           <h1>URL Shortener</h1>
 
