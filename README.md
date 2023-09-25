@@ -1,6 +1,17 @@
 # URL Shortener
 This is a project that consists of a front-end built with React.js, a back-end built with FastAPI, and a MySQL database.
 
+## Screenshot
+
+URL Shortener UI: 
+![front-end UI](./images/Screenshot_1.png)
+
+IP Logger UI:
+![front-end UI](./images/Screenshot_2.png)
+
+API docs:
+![API docs](./images/Screenshot_3.png)
+
 ## Getting Started
 To get started with this project, follow these steps:
 
