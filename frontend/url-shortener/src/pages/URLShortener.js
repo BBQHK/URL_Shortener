@@ -102,16 +102,18 @@ function URLShortener() {
           )}
         </Grid>
         <Grid item xs={4}>
-          <p style={{ marginTop: "300px" }}>QR code of the shortened URL:</p>
           {shortenedUrl && (
-            <div style={{ background: 'white', padding: '16px', margin:"auto", height: "auto", maxWidth: 300, width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-              <QRCode
-              size={256}
-              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-              value={shortenedUrl}
-              viewBox={`0 0 256 256`}
-              />
-            </div>
+            <>
+              <p style={{ marginTop: "300px" }}>QR code of the shortened URL:</p>
+              <div style={{ background: 'white', padding: '16px', margin:"auto", height: "auto", maxWidth: 300, width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <QRCode
+                size={256}
+                style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                value={shortenedUrl}
+                viewBox={`0 0 256 256`}
+                />
+              </div>
+            </>
           )}
         </Grid>
       </Grid>
