@@ -18,7 +18,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Link as LinkRouter, Outlet, useLoaderData, useLocation } from 'react-router-dom';
+import { Link as LinkRouter, Outlet } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Switch from '@mui/material/Switch';
 import { createTheme, ThemeProvider } from '@mui/material';
