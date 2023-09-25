@@ -55,7 +55,7 @@ DROP TABLE IF EXISTS `url_map`;
 CREATE TABLE `url_map` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
   `shorten_url` varchar(6) DEFAULT NULL,
-  `original_url` varchar(117) DEFAULT NULL,
+  `original_url` varchar(255) DEFAULT NULL,
   `created_date` varchar(19) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
