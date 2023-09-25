@@ -19,11 +19,15 @@
 -- Table structure for table `access_log`
 --
 
+DROP DATABASE IF EXISTS `url_mapping_db`;
+CREATE DATABASE `url_mapping_db`;
+USE `url_mapping_db`;
+
 DROP TABLE IF EXISTS `access_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `access_log` (
-  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `id` int(4) NOT NULL AUTO_INCREMENT,
   `shorten_url` varchar(6) DEFAULT NULL,
   `ip_addr` varchar(12) DEFAULT NULL,
   `access_time` varchar(19) DEFAULT NULL,
@@ -49,7 +53,7 @@ DROP TABLE IF EXISTS `url_map`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `url_map` (
-  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `id` int(4) NOT NULL AUTO_INCREMENT,
   `shorten_url` varchar(6) DEFAULT NULL,
   `original_url` varchar(117) DEFAULT NULL,
   `created_date` varchar(19) DEFAULT NULL,
